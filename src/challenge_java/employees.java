@@ -29,7 +29,7 @@ public class employees {
 					  name VARCHAR(60) NOT NULL,
 					  email  VARCHAR(255) NOT NULL,
 					  age INT(11),
-					  address  (VARCHAR(255)
+					  address  VARCHAR(255)
 					  	);
 					""";
 
