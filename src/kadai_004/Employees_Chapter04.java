@@ -15,7 +15,7 @@ public class Employees_Chapter04 {
 		try {
 			// データベースに接続
 			con = DriverManager.getConnection(
-					"jdbc:mysql://localhost/java_db",
+					"jdbc:mysql://localhost/challenge_java",
 					"root",
 					"");
 
