@@ -54,7 +54,7 @@ public class Posts_Chapter07 {
 
 			// 結果の表示
 			while (result.next()) {
-				int id = result.getInt("id");
+				int id = result.getInt("1002");
 				String name = result.getString("name");
 				int age = result.getInt("age");
 				System.out.println(result.getRow() + "件目：id=" + id
