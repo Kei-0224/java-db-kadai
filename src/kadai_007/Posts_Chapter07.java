@@ -5,13 +5,12 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class Posts_Chapter07 {
 	public static void main(String[] args) {
 		Connection con = null;
 		PreparedStatement insertStatement = null;
-		Statement selectStatement = null;
+		PreparedStatement selectStatement = null;
 
 		String[][] postList = {
 				{ "1003", "2023-02-08", "昨日の夜は徹夜でした・・", "13" },
@@ -24,7 +23,7 @@ public class Posts_Chapter07 {
 		try {
 			// データベースに接続
 			con = DriverManager.getConnection(
-					"jdbc:mysql://127.0.0.1/java_db",
+					"jdbc:mysql://127.0.0.1/challenge_java",
 					"root",
 					"");
 
@@ -46,38 +45,43 @@ public class Posts_Chapter07 {
 
 			}
 			// SELECTクエリの準備
-			String selectSQL = "SELECT * FROM users WHERE age >= 25;";
+			String selectSQL = "SELECT posted_at, post_content, likes FROM posts WHERE user_id = ? ORDER BY posted_at ASC;";
 			selectStatement = con.prepareStatement(selectSQL);
+			selectStatement.setString(1, "1002");
 
-			// 検索の実行
-			ResultSet result = selectStatement.executeQuery(selectSQL);
+			ResultSet result = selectStatement.executeQuery();
 
-			// 結果の表示
+			System.out.println("ユーザーIDが1002のレコードを検索しました");
+
+			int count = 1;
 			while (result.next()) {
-				int id = result.getInt("1002");
-				String name = result.getString("name");
-				int age = result.getInt("age");
-				System.out.println(result.getRow() + "件目：id=" + id
-						+ "／name=" + name + "／age=" + age);
-			}
+				String postedAt = result.getString("posted_at");
+				String content = result.getString("post_content");
+				int likes = result.getInt("likes");
 
+				System.out.println(count + "件目：投稿日時=" + postedAt +
+						"／投稿内容=" + content +
+						"／いいね数=" + likes);
+				count++;
+			}
 		} catch (SQLException e) {
 			System.out.println("エラー発生：" + e.getMessage());
 		} finally {
-			// 使用したオブジェクトを解放
-			if (insertStatement != null) {
+			if (insertStatement != null)
 				try {
 					insertStatement.close();
 				} catch (SQLException ignore) {
 				}
-			}
-			if (con != null) {
+			if (selectStatement != null)
+				try {
+					selectStatement.close();
+				} catch (SQLException ignore) {
+				}
+			if (con != null)
 				try {
 					con.close();
 				} catch (SQLException ignore) {
 				}
-			}
 		}
 	}
-
 }
