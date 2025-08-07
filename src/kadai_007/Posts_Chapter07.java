@@ -27,7 +27,16 @@ public class Posts_Chapter07 {
 					"root",
 					"");
 
-			System.out.println("データベース接続成功");
+			System.out.println("データベース接続成功" + con);
+			
+			// postsテーブル初期化
+			String deleteSQL = "DELETE FROM posts;";
+			PreparedStatement deleteStatement = con.prepareStatement(deleteSQL);
+			deleteStatement.executeUpdate();
+			deleteStatement.close();
+
+			System.out.println("レコード追加を実行します");
+
 
 			// INSERTクエリの準備
 			String insertSQL = "INSERT INTO posts (user_id, posted_at, post_content, likes) VALUES (?, ?, ?, ?);";
