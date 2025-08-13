@@ -19,9 +19,11 @@ public class Scores_Chapter10 {
 					"root",
 					"");
 
-			System.out.println("データベース接続成功");
+			System.out.println("データベース接続成功"+ con);
 
 			statement = con.createStatement();
+			
+			System.out.println("レコード追加を実行します");
 
 			String updateSql = "UPDATE scores SET score_math = 80, score_english = 95 WHERE id = 5";
 
